@@ -28,7 +28,6 @@ public class PersonController {
     public ResponseEntity<?> getPersonById(@PathVariable Long id) {
         try {
             Person person = personRepository.getOne(id);
-            System.out.println(person);
             return new ResponseEntity<>(person, HttpStatus.OK);
         } catch (Exception ex) {
             return badRequest(ex);
@@ -37,6 +36,7 @@ public class PersonController {
 
     private ResponseEntity<?> badRequest(Throwable ex) {
         ex.printStackTrace();
-        return new ResponseEntity<>(new HttpError("400", "Bad request"), HttpStatus.BAD_REQUEST);
+        HttpStatus badRequest = HttpStatus.BAD_REQUEST;
+        return new ResponseEntity<>(new HttpError(badRequest.value(), "Bad request"), badRequest);
     }
 }

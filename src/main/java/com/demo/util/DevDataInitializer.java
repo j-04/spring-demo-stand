@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 import com.demo.builder.PersonBuilder;
 import com.demo.domain.Person;
 
+import javax.transaction.Transactional;
+
 @Component
 @Profile("dev")
 public class DevDataInitializer implements DataInitializer {
@@ -25,6 +27,7 @@ public class DevDataInitializer implements DataInitializer {
     }
 
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public void insertPersonsToDataBase() {
         Person person1 = personBuilder.start()
                 .setPersonName("Mark")
